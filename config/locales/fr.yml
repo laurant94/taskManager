@@ -1,0 +1,19 @@
+fr:
+  activerecord:
+    models:
+      task: 'Utilisateur'
+    attributes:
+      task:
+        title: "Titre"
+        content: "La description de la tâche"
+  errors:
+    format: '%{attribute} %{message}'
+    messages:
+      blank: "vide"
+      invalid: "n'est pas valide"
+      too_short: " trop court"
+  view:
+    error: "erreur"
+    task_created: "Tâche créée avec succes"
+    task_updated: "Tâche mise à jour"
+    task_destroyed: "Tâche supprimée"

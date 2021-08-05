@@ -7,7 +7,14 @@ RSpec.describe 'task management', type: :system do
         #binding.irb
         current_path
         page.html
-        
+      end
+    end
+    context "Lorsque les tâches sont organisées par ordre décroissant de date et d'heure de création" do
+      it "La nouvelle tâche s'affiche en haut" do
+        visit tasks_path(column: 'created_at', order: "desc")
+        #binding.irb
+        current_path
+        page.html
       end
     end
   end

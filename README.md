@@ -46,4 +46,31 @@
 - **comment**: string
 - **task_count**: string
 
-# .
+# ----------------------------------------------
+
+
+
+
+
+
+
+# Deployement d'application sur heroku
+
+1.  Créer une application heroku dans le répertoire du projet avec la commande
+    > ` heroku create `
+2. Précompilé les actifs avec la commande
+    > `rails assets:precompile RAILS_ENV=production`
+3. Commenter la version Ruby dans le Gemfile si heroku-20 est utilisé
+4. Exécuter `bundle install` pour mettre à jour les dépendances
+5. Executer les commandes suivantes pour valiider le git
+    > `git add -A`
+    > `git commit -m "my-first-commit"`
+6. Ajouter le buildpack Heroku avec les commandes
+    > `heroku buildpacks:set heroku/ruby`
+    > `heroku buildpacks:add --index 1 heroku/nodejs`
+7. Deployer vers heroku avec
+    > `git push heroku master`
+8. Migrer la base de données avec 
+    > `heroku run rails db:migrate`
+
+### fin du deployement
