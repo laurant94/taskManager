@@ -4,7 +4,7 @@ RSpec.describe 'task management', type: :system do
     context 'show' do
       it 'all tasks' do
         visit tasks_path
-        binding.irb
+        #binding.irb
         current_path
         page.html
         
@@ -17,7 +17,7 @@ RSpec.describe 'task management', type: :system do
       it 'and show' do
         task = FactoryBot.create(:task, title: 'task', content: 'le contenue legitime')
         visit task_path(task.id)
-        binding.irb
+        #binding.irb
         current_path
         page.html
         expect(page).to have_content 'task'
