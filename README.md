@@ -69,7 +69,7 @@
     > `heroku buildpacks:set heroku/ruby`
     > `heroku buildpacks:add --index 1 heroku/nodejs`
 7. Deployer vers heroku avec
-    > `git push heroku master`
+    > `git push heroku step2:master`
 8. Migrer la base de données avec 
     > `heroku run rails db:migrate`
 
