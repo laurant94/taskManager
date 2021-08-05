@@ -1,17 +1,10 @@
 require 'rails_helper'
 RSpec.describe 'task management', type: :system do
+  let!(:task) {FactoryBot.create(:task, title: 'task title', content: 'description')}
   describe 'task manager' do
     context 'show' do
-      it 'all tasks' do
+      it 'all tasks order by created date and time' do
         visit tasks_path
-        #binding.irb
-        current_path
-        page.html
-      end
-    end
-    context "Lorsque les tâches sont organisées par ordre décroissant de date et d'heure de création" do
-      it "La nouvelle tâche s'affiche en haut" do
-        visit tasks_path(column: 'created_at', order: "desc")
         #binding.irb
         current_path
         page.html
