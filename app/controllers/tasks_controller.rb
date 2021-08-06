@@ -2,7 +2,8 @@ class TasksController < ApplicationController
   before_action :set_task, only: [ :show, :edit, :update, :destroy ]
 
   def index
-    @tasks = Task.all
+    @tasks = Task.order_by('created_at','DESC')
+    .all
   end
 
   def show
@@ -19,7 +20,7 @@ class TasksController < ApplicationController
     @task = Task.new(task_params)
     if @task.valid?
       @task.save
-      redirect_to @task, success: "Task was successfully created."
+      redirect_to @task, success: 'view.task_created'
     else
       render :new, status: :unprocessable_entity
     end
@@ -27,7 +28,7 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      redirect_to @task, success: "Task was successfully updated." 
+      redirect_to @task, success: 'view.task_updated'
     else
       render :edit, status: :unprocessable_entity
     end
@@ -35,7 +36,7 @@ class TasksController < ApplicationController
 
   def destroy
     @task.destroy
-    redirect_to tasks_url, notice: "Task was successfully destroyed."
+    redirect_to tasks_url(column: 'created_at', order: 'desc'), success: 'view.task_destroyed'
   end
 
   private
