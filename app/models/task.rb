@@ -25,7 +25,7 @@ class Task < ApplicationRecord
   end
 
   paginates_per 20
-
+ 
   private 
   def empty?(val)
     val.nil? or val.blank? or val.to_s.length <= 0
