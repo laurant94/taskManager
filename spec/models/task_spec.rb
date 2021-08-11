@@ -16,6 +16,12 @@ RSpec.describe Task, type: :model do
         expect(task).to be_valid
       end
     end
+    context "filter" do
+      it "filter tasks" do
+        tasks = Task.filter_task('zzzz', 'no status').count
+        expect(tasks).to eq 0
+      end
+    end
   end
   
 end

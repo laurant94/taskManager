@@ -16,6 +16,10 @@ module TaskManager
     config.time_zone = 'Africa/Porto-Novo'
     config.active_record.default_timezone = :local
 
+    config.site = {
+      name: "Task Manager"
+    }
+
     config.generators do |g|
       g.helper false
       g.assets false

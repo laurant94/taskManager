@@ -1,29 +1,98 @@
 <p id="danger"><%= t(danger) %></p>
 <p id="success"><%= t(success) %></p>
 
-<h1>Tasks</h1>
-<table>
-  <thead>
-    <tr>
+
+
+<div class="">
+  
+
+  <%= form_with url: {action: 'index'}, method: :get, local: true do |f| %>
+    <div class="row">
+      <div class="col-8">
+        <div class="input-group mb-3">
+          <%= f.text_field :title, value: @title, class: 'form-control', placeholder: "Title" %>
+          <%= f.select :status, options_for_select( [[], ["En attente", "en attente"], ["En cours","en cours"], ["Terminé", "terminé"]], @status ), class: 'form-control' %>
+        </div>
+      </div>
+      <div class="col">
+        <%= f.submit 'Rechercher', class: 'btn btn-primary' %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <%= f.label :attribute, 'Filtered by' %>
+      </div>
+      <div class="col">
+        <%= f.select :column, options_for_select( [["Date de fin", "expired_at"], ["Priorité","priority"], ["Status", "status"]], 'status' )%>
+      </div>
+      <div class="col">
+        <%= f.select :order, options_for_select( [["Croissant", "ASC"], ["Decroissant","DESC"]], params[:order] ), class: 'form-control' %>
+      </div>
+    </div>
+  <% end %>
+</div> 
+<%= link_to 'Trier par échéance de fin', tasks_path(column: 'expired_at', order: 'desc'), class: 'btn-link text-success' %>
+<br><br><br><br><br><br>
+
+<div class="row">
+  <div class="col">
+    <h1 class="text-center" >Tasks</h1>
+  </div>
+  <div class="col text-end">
+    <%= link_to 'New Task', new_task_path, class:'btn btn-primary btn-sm' %>
+  </div>
+</div>
+
+<table class="table">
+  <thead class="table-light">
+    <tr class="text-center">
       <th>Title</th>
       <th>Content</th>
-      <th colspan="3"></th>
+      <th>Status</th>
+      <th>Expired</th>
+      <th>Priority</th>
+      <th colspan="3" >Actions</th>
     </tr>
   </thead>
 
   <tbody>
+    
+    <% if @tasks.empty? %>
+      <td colspan="6">
+        <h1 class="text-center h2" >No task for a moment. <%= link_to "Create first", new_task_path %> </h1>
+      </td>
+      
+    <% end %>
+    
     <% @tasks.each do |task| %>
       <tr>
         <td><%= task.title %></td>
         <td><%= task.content %></td>
-        <td><%= link_to 'Show', task %></td>
-        <td><%= link_to 'Edit', edit_task_path(task) %></td>
-        <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= task.status.capitalize %></td>
+        <td><%= task.expired_at.to_s.present? ? task.expired_at.to_time.strftime('%e %B at %l:%M %p') : 'Nothing' %></td>
+        <td><%= task.priority %></td>
+        <td><%= link_to 'Show', task, class: "text-primary" %></td>
+        <td><%= link_to 'Edit', edit_task_path(task), class:"text-success" %></td>
+        <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-danger' %></td>
       </tr>
     <% end %>
   </tbody>
+  <tfoot>
+     <div>
+      <ul class="pagination justify-content-end">
+        <li class="page-item <%= 'disabled' if @tasks.page(params[:page]).first_page? %>">
+          <a class="page-link" href="<%= tasks_path(page: @tasks.page(params[:page]).prev_page) %>" tabindex="-1" aria-disabled="<%= @tasks.page(params[:page]).first_page?%>" >Previous</a>
+        </li>
+        <% @tasks.total_pages.times do |i| %>
+          <li class="page-item <%= 'active' if params[:page].to_i== i+1 %> "><a class="page-link" href=" <%= tasks_path(page: i+1) %> "> <%= i+1 %> </a></li>
+        <% end %>
+        <li class="page-item <%= 'disabled' if @tasks.page(params[:page]).last_page? %>">
+          <a class="page-link" href=" <%= tasks_path(page: @tasks.page(params[:page]).next_page) %> " aria-disabled="<%= @tasks.page(params[:page]).last_page?%>">Next</a>
+        </li>
+   
+      </ul>
+    </div>
+  </tfoot>
 </table>
 
 <br>
-
-<%= link_to 'New Task', new_task_path %>
