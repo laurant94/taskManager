@@ -2,8 +2,12 @@ class TasksController < ApplicationController
   before_action :set_task, only: [ :show, :edit, :update, :destroy ]
 
   def index
-    @tasks = Task.order_by('created_at','DESC')
-    .all
+    @title = params[:title].present? && params[:title].length >0 ? params[:title] : '';
+    @status = params[:status].present? && params[:status].length >0 ? params[:status] : '';
+    puts status
+    @tasks = Task.order_by(params[:column]||"created_at", params[:order]||"DESC")
+    .filter_task(@title, @status)
+    .page params[:page]||1
   end
 
   def show
@@ -45,6 +49,6 @@ class TasksController < ApplicationController
     end
 
     def task_params
-      params.require(:task).permit(:title, :content)
+      params.require(:task).permit(:title, :content, :expired_at, :status, :priority)
     end
 end

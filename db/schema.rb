@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_27_213551) do
+ActiveRecord::Schema.define(version: 2021_08_11_001729) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,12 @@ ActiveRecord::Schema.define(version: 2021_07_27_213551) do
     t.text "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "expired_at"
+    t.integer "status", default: 1
+    t.integer "priority", default: 1
+    t.index ["expired_at"], name: "index_tasks_on_expired_at"
+    t.index ["status"], name: "index_tasks_on_status"
+    t.index ["title"], name: "index_tasks_on_title"
   end
 
 end

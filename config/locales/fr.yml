@@ -5,7 +5,8 @@ fr:
     attributes:
       task:
         title: "Titre"
-        content: "La description de la tâche"
+        content: "Description"
+        expired_at: "Date de fin"
   errors:
     format: '%{attribute} %{message}'
     messages:
@@ -17,3 +18,4 @@ fr:
     task_created: "Tâche créée avec succes"
     task_updated: "Tâche mise à jour"
     task_destroyed: "Tâche supprimée"
+    create_task: "Créer une tache"
