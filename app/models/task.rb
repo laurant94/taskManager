@@ -14,17 +14,18 @@ class Task < ApplicationRecord
     order( column => direction)
   end
 
-  scope :filter_task, ->(title='', status=nil) do 
+  scope :filter_task, ->(title='', status='') do 
     if !title.empty? and status.empty?
       return where("title LIKE ?", "%#{title}%")
     elsif !status.empty? and title.empty?
       return where(status: status)
     elsif !status.empty? and !title.empty?
-      return where("title LIKE ?", "#{title}").where(status: status)
+      return where("title LIKE ?", "%#{title}%").where(status: status)
     end
   end
 
   paginates_per 20
+  belongs_to :user, counter_cache: true
  
   private 
   def empty?(val)
