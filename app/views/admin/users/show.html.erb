@@ -1,0 +1,70 @@
+<% if flash[:success].present? || flash[:danger].present? %>
+  <div class="alert alert-<%= flash[:success] ? 'success' : 'danger' %>">
+    <p id="danger"><%= t(danger) %></p>
+    <p id="success"><%= t(success) %></p>
+  </div>
+<% end %>
+
+<p>
+  <strong>Role:</strong>
+  <%= @user.role %>
+</p>
+
+<p>
+  <strong>Username:</strong>
+  <%= @user.username %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+
+<p>
+  <strong>Firstname:</strong>
+  <%= @user.firstname %>
+</p>
+
+<p>
+  <strong>Lastname:</strong>
+  <%= @user.lastname %>
+</p>
+
+<p>
+  <strong>Biographie:</strong>
+  <%= @user.bio %>
+</p>
+
+
+<table class="table">
+  <thead class="table-light">
+    <tr class="text-center">
+      <th>Title</th>
+      <th>Content</th>
+      <th>Status</th>
+      <th>Expired</th>
+      <th>Priority</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    
+    <% if @user.tasks.empty? %>
+      <td colspan="6">
+        <h1 class="text-center h2" >No task for a moment. </h1>
+      </td>
+      
+    <% end %>
+    
+    <% @user.tasks.each do |task| %>
+      <tr>
+        <td><%= task.title %></td>
+        <td><%= task.content %></td>
+        <td><%= task.status.capitalize %></td>
+        <td><%= task.expired_at.to_s.present? ? task.expired_at.to_time.strftime('%e %B at %l:%M %p') : 'Nothing' %></td>
+        <td><%= task.priority %></td>
+      </tr>
+    <% end %>
+  </tbody>
+  
+</table>

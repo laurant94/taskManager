@@ -5,7 +5,7 @@ class TasksController < ApplicationController
     @title = params[:title].present? && params[:title].length >0 ? params[:title] : '';
     @status = params[:status].present? && params[:status].length >0 ? params[:status] : '';
     puts status
-    @tasks = Task.order_by(params[:column]||"created_at", params[:order]||"DESC")
+    @tasks = current_user.tasks.order_by(params[:column]||"created_at", params[:order]||"DESC")
     .filter_task(@title, @status)
     .page params[:page]||1
   end
@@ -22,8 +22,10 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
-    if @task.valid?
-      @task.save
+    # @task.user = current_user
+    current_user.tasks << @task
+    if current_user.save
+      
       redirect_to @task, success: 'view.task_created'
     else
       render :new, status: :unprocessable_entity

@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="">
+    <%= form_for @user, url: profil_path, html: { multipart: true, }  do |f| %>
+      <div class="row text-center">
+        <div class="mb-3">
+          <%= f.text_field :username, class:"form-control form-control-sm disabled", disabled: true %>
+        </div>
+        <div class="mb-3">
+          <%= f.text_field :email, class:"form-control form-control-sm disabled", disabled: true %>
+        </div>
+      </div>
+      <div class="mb-3">
+        <%= f.text_field :firstname, placeholder: "Nom", class:"form-control form-control-sm" %>
+      </div>
+      <div class="mb-3">
+        <%= f.text_field :lastname, placeholder: "Prénom", class:"form-control form-control-sm" %>
+      </div>
+      <div class="mb-3">
+        <%= f.text_area :bio, placeholder: "Biographie", class:"form-control form-control-sm" %>
+      </div>
+      <div class="mb-3 text-end">
+        <%= f.submit 'Mettre à jour', class: "btn btn-success" %>
+      </div>
+    <% end %>
+  </div>
+</div>
