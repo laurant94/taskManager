@@ -19,3 +19,4 @@ fr:
     task_updated: "Tâche mise à jour"
     task_destroyed: "Tâche supprimée"
     create_task: "Créer une tache"
+    create_label: "Créer un label"
