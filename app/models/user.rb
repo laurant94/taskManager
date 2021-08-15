@@ -5,6 +5,7 @@ class User < ApplicationRecord
   enum role: {client: 1, admin: 2}
 
   has_many :tasks
+  has_many :labels
   has_secure_password
   has_secure_token :token
 

@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root to:'tasks#index'
   resources :tasks
-
+  resources :labels
 
   #session routes
   get '/login', to: 'sessions#new', as: :login

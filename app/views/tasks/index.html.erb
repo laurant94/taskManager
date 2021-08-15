@@ -28,6 +28,9 @@
       <div class="col">
         <%= f.select :order, options_for_select( [["Croissant", "ASC"], ["Decroissant","DESC"]], params[:order] ), class: 'form-control' %>
       </div>
+      <div class="col">
+        <%= f.select :label, options_for_select( current_user.labels.all.collect {|l| [l.name.to_s.capitalize, l.id] } , params[:label] ), include_blank: true, class: 'form-control' %>
+      </div>
     </div>
   <% end %>
 </div> 

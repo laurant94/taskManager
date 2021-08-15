@@ -1,0 +1,23 @@
+<%= form_with(model: label, local: true ) do |form| %>
+  <% if label.errors.any? %>
+    <div id="error_explanation" class="alert-danger">
+      <h2 class="h4" ><%= pluralize(label.errors.count, t('view.error') ) %> au cours de l'engeristrement de la tâche</h2>
+
+      <ul>
+      <% label.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="row mb-3">
+    <%= form.label :name, class: 'col-sm-2 col-form-label text-start' %>
+    <div class="col-sm-10">
+      <%= form.text_field :name, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <%= form.submit t('view.create_task') , class: 'btn btn-primary' %>
+  </div>
+<% end %>

@@ -1,0 +1,45 @@
+<% if flash[:success].present? || flash[:danger].present? %>
+  <div class="alert alert-<%= flash[:success] ? 'success' : 'danger' %>">
+    <p id="danger"><%= t(danger) %></p>
+    <p id="success"><%= t(success) %></p>
+  </div>
+<% end %>
+
+<div class="row">
+  <div class="col">
+    <h1 class="text-center" >Labels</h1>
+  </div>
+  <div class="col text-end">
+    <%= link_to 'New Label', new_label_path, class:'btn btn-primary btn-sm' %>
+  </div>
+</div>
+
+<table class="table">
+  <thead class="table-light">
+    <tr class="text-center">
+      <th>Name</th>
+      <th colspan="3" >Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    
+    <% if @labels.empty? %>
+      <td colspan="6">
+        <h1 class="text-center h2" >No label for a moment. <%= link_to "Create first", new_label_path %> </h1>
+      </td>
+      
+    <% end %>
+    
+    <% @labels.each do |task| %>
+      <tr>
+        <td><%= task.name %></td>
+        <td><%= link_to 'Show', task, class: "text-primary" %></td>
+        <td><%= link_to 'Edit', edit_label_path(task), class:"text-success" %></td>
+        <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-danger' %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>

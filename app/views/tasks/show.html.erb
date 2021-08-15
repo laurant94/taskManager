@@ -26,5 +26,12 @@
   <%= @task.priority %>
 </p>
 
+<p>
+  <strong>Labels:</strong>
+  <% @task.labels.each do |l| %>
+    <a href="<%= tasks_path(label: l.id) %>"> <%= l.name %> </a> &nbsp; 
+  <% end %>
+</p>
+
 <%= link_to 'Edit', edit_task_path(@task) %> |
 <%= link_to 'Back', tasks_path %>

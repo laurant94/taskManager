@@ -24,8 +24,11 @@ class Task < ApplicationRecord
     end
   end
 
-  paginates_per 20
+  scope :from_label, ->(label) { joins(:labels).where("labels.id = ?", label) if !label.blank?}
+
+  paginates_per 10
   belongs_to :user, counter_cache: true
+  has_and_belongs_to_many :labels
  
   private 
   def empty?(val)

@@ -46,6 +46,21 @@
     </div>
   </div>
 
+  <div class="row mb-3">
+    <%= form.label :label_ids, 'Labels', class: 'col-sm-2 col-form-label text-start' %>
+    <div class="col-sm-10">
+      <div class="row">
+        <% current_user.labels.all.each do |l| %>
+          <div class="col">
+            <%= form.check_box :label_ids, {multiple: true, checked: (task.labels.include? l), disabled: l[:disabled], include_hidden: false}, l[:id] %>
+            <label> <%= l.name %> </label>
+          </div>
+        <% end %>
+        
+      </div>
+    </div>
+  </div>
+
   <div class="d-grid gap-2 d-md-flex justify-content-md-end">
     <%= form.submit t('view.create_task') , class: 'btn btn-primary' %>
   </div>
