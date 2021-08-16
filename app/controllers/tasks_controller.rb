@@ -4,9 +4,10 @@ class TasksController < ApplicationController
   def index
     @title = params[:title].present? && params[:title].length >0 ? params[:title] : '';
     @status = params[:status].present? && params[:status].length >0 ? params[:status] : '';
-    puts status
+
     @tasks = current_user.tasks.order_by(params[:column]||"created_at", params[:order]||"DESC")
     .filter_task(@title, @status)
+    .from_label(params[:label])
     .page params[:page]||1
   end
 
@@ -23,6 +24,8 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     # @task.user = current_user
+    labels = Label.where(id: params[:task][:label_ids]).all
+    @task.labels << labels
     current_user.tasks << @task
     if current_user.save
       
@@ -33,6 +36,9 @@ class TasksController < ApplicationController
   end
 
   def update
+    @task.labels.delete_all
+    labels = Label.where(id: params[:task][:label_ids]).all
+    @task.labels << labels
     if @task.update(task_params)
       redirect_to @task, success: 'view.task_updated'
     else
@@ -51,6 +57,6 @@ class TasksController < ApplicationController
     end
 
     def task_params
-      params.require(:task).permit(:title, :content, :expired_at, :status, :priority)
+      params.require(:task).permit(:title, :content, :expired_at, :status, :priority, :label_ids)
     end
 end

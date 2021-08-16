@@ -1,0 +1,10 @@
+<p id="danger"><%= t(danger) %></p>
+<p id="success"><%= t(success) %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @label.name %>
+</p>
+
+<%= link_to 'Edit', edit_task_path(@task) %> |
+<%= link_to 'Back', tasks_path %>
